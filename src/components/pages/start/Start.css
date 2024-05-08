@@ -1,0 +1,10 @@
+.container{
+    text-align: center;
+}
+h2{
+    padding: 30px;
+}
+.button-enter{
+    width: 40%;
+    font-size: 24px !important;
+}

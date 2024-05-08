@@ -1,4 +1,4 @@
-##Deploy by netlify
+## Deploy by netlify
 https://app.netlify.com/sites/reactquizproject/deploys
 
 # Getting Started with Create React App

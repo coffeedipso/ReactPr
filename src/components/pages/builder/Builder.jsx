@@ -2,68 +2,72 @@ import { React, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ThreeSixtyIcon from '@mui/icons-material/ThreeSixty';
 import './Builder.css';
-
 
 function QuestionTemplate() {
     const [questionText, setQuestionText] = useState("");
-    const [choices, setChoices] = useState([
-        { key: 1, value: 'ответ 1', id: 0 },
-        { key: 2, value: 'ответ 2', id: 1 },
-        { key: 3, value: 'ответ 3', id: 2 }
-    ]);
+    const [answerText, setAnswerText] = useState("");
+    const [choices, setChoices] = useState([]);
 
-    function updateQuestionTextHandler(target) {
-        setQuestionText(target.value)
+    function updateQuestionTextHandler(event) {
+        setQuestionText(event.target.value);
+    }
+
+    function updateAnswerTextHandler(event) {
+        setAnswerText(event.target.value);
     }
 
     function addChoice(choice) {
-        setChoices([...choices, choice]);
-        console.log(choices)
+        setChoices([...choices, { ...choice, id: choices.length + 1 }]);
     }
 
     return (
         <div className="question-template">
             <div className="question-text">
-                <Form.Label
-                    htmlFor="inputPassword5"
-                    className="title title-text">
-                    Вопрос
-                </Form.Label>
-                <Form.Control
+         
+                <Form.Label htmlFor="inputQuestionText" className="title title-text">Введите вопрос <Form.Control
                     as="textarea"
                     id="inputQuestionText"
                     value={questionText}
-                />
-                {questionText}
+                    onChange={updateQuestionTextHandler}
+                /></Form.Label>
+                
+                <Form.Label  className="title title-text">Варианты ответов
+                <Form.Control
+                    as="textarea"
+                    id="inputQuestionText"
+                    value={answerText}
+                    onChange={updateAnswerTextHandler}
+                /></Form.Label>
+
             </div>
-            {
-                choices.map((choice) => {
-                    return (
-                        <div className="choice">
-                            <Form.Control
-                                as="text"
-                                id={`choiceText ${choice.id}`}
-                                value={`${choice.key}. ${choice.value}`}
-                            />
-                        </div>
-                    )
-                })
-            }
-            <Button variant="outline-dark" size="sm" className='buttonAddQuestion' onClick={
-                () => {
-                    addChoice({ value: 'вообще пофигу', key: 4, id: 3 });
-                }
-            }>
+
+            {choices.map((choice, index) => (
+                <div key={choice.id} className="choice">
+                    <Form.Control
+                        as="input"
+                        id={`choiceText-${choice.id}`}
+                        value={`${index + 1}. ${choice.value}`}
+                    />
+                </div>
+            ))}
+
+            <Button variant="outline-dark" size="sm" className='buttonAddQuestion' onClick={() => {
+                addChoice({ value: answerText, key: choices.length + 1 });
+            }}>
                 <AddCircleOutlineIcon /> Добавить ответ
             </Button>
-            <div className="choices">
 
-            </div>
-
+            <Button variant="outline-dark" size="sm" className="buttonTransitionToQuestion" onClick={() => {
+                
+            }}>
+                <ThreeSixtyIcon /> Готово
+            </Button>
         </div>
     );
 }
+
 
 export default function Builder() {
     return (
@@ -74,4 +78,4 @@ export default function Builder() {
         </Button> */}
         </div>
     )
-}
+} 
